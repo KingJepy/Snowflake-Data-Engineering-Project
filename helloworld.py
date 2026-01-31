@@ -22,7 +22,7 @@ def get_last_20_event_links():
     table = last_20_div.find_next("table")
     
     # Extract all event links from that table
-    event_links = []
+    event_links = set()
     for a in table.find_all("a", href=True):
         if "event?e=" in a["href"]:
             event_links.append(BASE + "/" + a["href"])
