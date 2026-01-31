@@ -12,9 +12,13 @@ def get_last_20_event_links():
     last_20_div = soup.find("div", string="LAST 20 EVENTS")
     if not last_20_div:
         return []
+    
+    print(last_20_div)
 
     # The table we want is the next <table> after this div
     table = last_20_div.find_next("table")
+
+    print(table)
     
     # Get all event links in that table
     event_links = []
