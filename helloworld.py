@@ -8,27 +8,28 @@ def get_last_20_event_links():
     r = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
     soup = BeautifulSoup(r.text, "html.parser")
     
-    # Find the div that says "LAST 20 EVENTS"
-    last_20_div = soup.find("div", string="LAST 20 EVENTS")
-    if not last_20_div:
-        return "didnt find last 20 div"
+    # Find the div that contains "LAST 20 EVENTS" in its text
+    last_20_div = None
+    for div in soup.find_all("div", class_="w_title"):
+        if "LAST 20 EVENTS" in div.get_text(strip=True):
+            last_20_div = div
+            break
     
-    print(last_20_div)
+    if not last_20_div:
+        return []
 
     # The table we want is the next <table> after this div
     table = last_20_div.find_next("table")
-
-    print(table)
     
-    # Get all event links in that table
+    # Extract all event links from that table
     event_links = []
     for a in table.find_all("a", href=True):
-        href = a['href']
-        if "event?e=" in href:
-            event_links.append(BASE + "/" + href)
-
+        if "event?e=" in a["href"]:
+            event_links.append(BASE + "/" + a["href"])
+    
     return event_links
 
+# Test it
 events = get_last_20_event_links()
 print(f"Found {len(events)} events:")
 for e in events:
