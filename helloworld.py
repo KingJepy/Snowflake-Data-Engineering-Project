@@ -16,16 +16,16 @@ def get_last_20_event_links():
             break
     
     if not last_20_div:
-        return []
+        return set()  # return empty set if not found
 
     # The table we want is the next <table> after this div
     table = last_20_div.find_next("table")
     
     # Extract all event links from that table
-    event_links = set()
+    event_links = set()  # use a set
     for a in table.find_all("a", href=True):
         if "event?e=" in a["href"]:
-            event_links.append(BASE + "/" + a["href"])
+            event_links.add(BASE + "/" + a["href"])
     
     return event_links
 
