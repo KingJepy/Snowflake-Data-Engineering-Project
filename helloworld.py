@@ -11,7 +11,7 @@ def get_last_20_event_links():
     # Find the div that says "LAST 20 EVENTS"
     last_20_div = soup.find("div", string="LAST 20 EVENTS")
     if not last_20_div:
-        return []
+        return "didnt find last 20 div"
     
     print(last_20_div)
 
