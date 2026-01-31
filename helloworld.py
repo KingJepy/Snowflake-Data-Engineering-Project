@@ -16,3 +16,6 @@ def get_event_links():
 
 events = get_event_links()
 print(f"Found {len(events)} events")
+
+for event in events:
+    print(event)
