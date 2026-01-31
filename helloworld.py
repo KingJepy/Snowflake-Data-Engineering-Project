@@ -8,6 +8,8 @@ def get_event_links():
     r = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
     soup = BeautifulSoup(r.text, "html.parser")
 
+    print(soup.prettify())
+
     event_links = set()
     for a in soup.select("a[href*='event?e=']"):
         event_links.add(BASE + "/" + a["href"])
@@ -19,3 +21,4 @@ print(f"Found {len(events)} events")
 
 for event in events:
     print(event)
+
